@@ -1,5 +1,8 @@
 package com.jmtennant.sudoku.SudokuSolver.core;
 
+import edu.ncsu.csc316.dsa.list.ArrayBasedList;
+import edu.ncsu.csc316.dsa.list.List;
+
 public class Board {
 	private Cell[][] cells;
 	private int size;
@@ -75,4 +78,30 @@ public class Board {
     	return output;
     }
     
+    /**
+     * Gets the cells from the argued block in a list from Left to Right, Top to Bottom
+     * @param x row that block is in (0 to sqrt(n)-1, incl.)
+     * @param y column that block is in (0 to sqrt(n)-1, incl.)
+     * @return an ArrayList of Cells from the block
+     */
+    public List<Cell> getListCellsFromBlock( int x, int y){
+    	List<Cell> output = new ArrayBasedList<Cell>(size);
+    	int b = (int) Math.sqrt( (double) this.size );
+    	for( int i = 0; i < b; i++) { // for sqrt(n) rows
+    		int xCoord = x*b + i; // calculate x coordinate
+    		for( int j = 0; j < b; j++ ) { // for sqrt(n) cols
+    			int yCoord = y*b + j; // calculate y coordinate
+    			output.addLast( cells[xCoord][yCoord] );
+    		}
+    	}
+    	return output;
+    }
+    
+    /**
+     * Getter for the whole board
+     * @return 2D array of cells
+     */
+    public Cell[][] getBoard(){
+    	return cells;
+    }
 }
