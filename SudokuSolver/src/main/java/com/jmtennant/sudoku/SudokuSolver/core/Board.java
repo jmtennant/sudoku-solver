@@ -7,14 +7,17 @@ public class Board {
 	private Cell[][] cells;
 	private int size;
 	
-	  
-	
 	/**
 	 * Constructor for Sudoku Board
 	 * @param size
 	 */
 	public Board(int size) {
 		super();
+		//check if size is a perfect square
+		double sqrt = Math.sqrt( (double) size);
+		if( Math.floor(sqrt) != sqrt ) {
+			throw new IllegalArgumentException("Invalid Board size: " + size + " is not a perfect square");
+		}
 		this.size = size;
 		this.cells = new Cell[this.size][this.size];
 	}
@@ -34,12 +37,24 @@ public class Board {
 		}
 	}
 	
+	/**
+	 * Validater function for cell value, checks if value within bounds for board
+	 * @param value value being checked
+	 * @throws IllegalArgumentException if out of bounds for board (not between 0 and n, incl.)
+	 */
 	public void validateCellValue( int value ) {
-		if( value < 1 || value > this.size ) {
+		if( value < 0 || value > this.size ) {
 			throw new IllegalArgumentException("Value " + value + " out of bounds for range 1 to " + this.size );
 		}
 	}
 	
+	/**
+	 * Setter for cell 
+	 * @param row Row coordinate of target cell
+	 * @param col Column coordinate of target cell 
+	 * @param value Value to set in cell
+	 * @return previous value held by cell
+	 */
 	public int setCellValue( int row, int col, int value ) {
 		validateCoordinates( row, col );
 		validateCellValue(value);
@@ -70,7 +85,7 @@ public class Board {
      * @param col The column in which the specified cell resides
      * @return ordered pair (Br, Bc) identifying the block the cell resides in
      */
-    public int[] getBlock( int row, int col ) {
+    public int[] getBlockOfCell( int row, int col ) {
     	validateCoordinates( row, col );
     	int[] output = new int[2];
     	output[0] = row / (int) Math.sqrt( (double) this.size ); //get x value of block (0,1,2) are in block 0 
@@ -79,7 +94,7 @@ public class Board {
     }
     
     /**
-     * Gets the cells from the argued block in a list from Left to Right, Top to Bottom
+     * Gets the cells from the target block in a list from Left to Right, Top to Bottom
      * @param x row that block is in (0 to sqrt(n)-1, incl.)
      * @param y column that block is in (0 to sqrt(n)-1, incl.)
      * @return an ArrayList of Cells from the block
@@ -98,10 +113,49 @@ public class Board {
     }
     
     /**
+     * Gets the int values from the cells in target block in array from left to right, top to bottom
+     * @param x block row that target block is in (0 to sqrt(n)-1, incl.)
+     * @param y block column that target block is in (0 to sqrt(n)-1, incl.)
+     * @return array of int values representing values of cells in the block
+     */
+    public int[] getValuesInBlock( int x, int y ) {
+    	int[] output = new int[this.size];
+    	int b = (int) Math.sqrt( (double) this.size );
+    	int k = 0; //location in output array
+    	for( int i = 0; i < b; i++) { // for sqrt(n) rows
+    		int xCoord = x*b + i; // calculate x coordinate
+    		for( int j = 0; j < b; j++ ) { // for sqrt(n) cols
+    			int yCoord = y*b + j; // calculate y coordinate
+    			output[k] = this.cells[xCoord][yCoord].getElement();
+    			k++; // move to next spot in output array
+    		}
+    	}
+    	return output;
+    }
+    
+    /**
      * Getter for the whole board
      * @return 2D array of cells
      */
     public Cell[][] getBoard(){
     	return cells;
     }
+    
+    /**
+     * Sets cell to empty, delegates to setCellValue
+     * @param row target row
+     * @param col target column
+     * @return value replaced by 0
+     */
+    public int setCellToEmpty( int row, int col ) {
+    	return setCellValue(row, col, 0);
+    }
+
+    /**
+     * Getter for size dimension
+     * @return number of cells in a row, in a column, and in a block
+     */
+	public int size() {
+		return this.size;
+	}
 }
