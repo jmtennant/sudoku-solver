@@ -57,7 +57,7 @@ public class BasicBoardCheck extends BoardCheck {
 				}
 			}
 		}
-		
+		this.output = outputStage.toString();
 		return isValidBoard;
 	}
 
