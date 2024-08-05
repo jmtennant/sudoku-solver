@@ -1,0 +1,26 @@
+Author: Jacob Tennant (jmtennant543@gmail.com)
+Date: August 5, 2024
+
+PruneAndConquerSudokuSolver: Algorithm to solve sudoku boards using a prune & conquer approach. General approach is 
+      to identify all the possible elements that could be held in each cell, and then fill in where there is only 
+      one possible element. Upon filling in a cell, revisit possible elements set for other cells in row, column, 
+      and block. Secondary algorithm may be required in the case that no cells have only one possible element. 
+Inputs: Sudoku Board B with starting parameters filled in, of size n x n
+Outputs:Sudoku Board B with every cell solved (hopefully)
+
+Board 
+P <-- new 3D integer array
+
+//Frequency Tables
+Rows <-- new ArrayList of integer arrays // will hold frequency tables for rows
+Columns <-- new ArrayList of integer arrays // will hold frequency tables for columns
+Blocks <-- new ArrayList of integer arrays // will hold frequency tables for blocks
+
+//populate possible elements for each cell
+for each Cell in Board do 
+    if Cell C is empty do
+        populatePossibilities(C, P)      
+
+// remaining tasks: go through and fill in elements with one possibility, then revisit possiblities, then repeat
+
+// idea: next algorithm should use frequency tables for how many spots have each option, 

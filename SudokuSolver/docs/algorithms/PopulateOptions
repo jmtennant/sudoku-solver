@@ -1,0 +1,35 @@
+Author: Jacob Tennant (jmtennant543@gmail.com)
+Date: August 5, 2024
+
+PopulateOptions Algorithm: Helper algorithm for solver algorithms. Given a cell's coordinates and a board, 
+    generates a list with the options of possible elements that could go in that cell. Runs in O(n)
+Input: Integer i, the row coordinate of the cell
+       Integer j, the column coordinate of the cell
+       SudokuBoard Board, board of size n that the cell is in
+Output: List L of possible numbers that could go in the cell. Returns null if the cell is not empty.
+
+F <-- new Boolean array of size n + 1
+L <-- new List of integers of size n + 1  
+
+//check through the row
+for each Cell in Board.getRow(i) do 
+    if Cell not empty do
+       int x <-- Cell.getElement()
+       F[x] <-- true;
+       
+//check through the column
+for each Cell in Board.getCol(i) do 
+    if Cell not empty do
+       int x <-- Cell.getElement()
+       F[x] <-- true;
+
+//check through the block
+for each Cell in Board.getBlock(i) do 
+    if Cell not empty do
+       int x <-- Cell.getElement()
+       F[x] <-- true;
+
+//populate output       
+for k from 1 to n do
+    if F[k] = false do
+       L.add(k)
