@@ -8,7 +8,7 @@ import edu.ncsu.csc316.dsa.list.List;
  *  with more fields to be added as necessary
  *  
  *  @author Jacob Tennant
- *  
+ *  @version August 6, 2024
  */
 public class Cell {
     /** element held by the sudoku cell, represented by an integer for our purposes 
@@ -72,10 +72,10 @@ public class Cell {
 		this.options.addLast(newOption);
 	}
 	
-	public void setOptions( int[] newOptions ) {
+	public void setOptions( List<Integer> newOptions ) {
 		this.options = new ArrayBasedList<Integer>();
-		for( int i = 0; i < newOptions.length; i++) {
-			this.options.addLast(newOptions[i]);
+		for( int i = 0; i < newOptions.size(); i++) {
+			this.options.addLast(newOptions.get(i));
 		}
 	}
     /**
@@ -122,5 +122,7 @@ public class Cell {
 		this.col = col;
 	}
 	
-	
+	public boolean isEmpty() {
+		return this.element == 0;
+	}
 }

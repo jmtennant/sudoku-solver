@@ -1,5 +1,6 @@
 Author: Jacob Tennant (jmtennant543@gmail.com)
 Date: August 5, 2024
+Last Updated: August 6, 2024
 
 PopulateOptions Algorithm: Helper algorithm for solver algorithms. Given a cell's coordinates and a board, 
     generates a list with the options of possible elements that could go in that cell. Runs in O(n)
@@ -32,4 +33,4 @@ for each Cell in Board.getBlock(i) do
 //populate output       
 for k from 1 to n do
     if F[k] = false do
-       L.add(k)
+       L.addLast(k)

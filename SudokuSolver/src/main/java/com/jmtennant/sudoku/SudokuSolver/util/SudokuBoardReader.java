@@ -11,7 +11,7 @@ import com.jmtennant.sudoku.SudokuSolver.core.Board;
  * Input Reader class reads files and generates {@link com.jmtennant.sudoku.SudokuSolver.core.Board} objects accordingly.
  * 
  * @author Jacob Tennant
- * 
+ * @version August 6, 2024
  */
 public class SudokuBoardReader {
 	

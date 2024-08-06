@@ -1,10 +1,12 @@
 Author: Jacob Tennant (jmtennant543@gmail.com)
 Date: August 5, 2024
+Last Updated: August 6, 2024
 
 PruneBoard: Algorithm to help solve sudoku boards using a prune & conquer approach. General approach is 
       to identify all the possible elements that could be held in each cell, and then fill in where there is only 
       one possible element. Upon filling in a cell, revisit possible elements set for other cells in row, column, 
-      and block. Secondary algorithm may be required in the case that no cells have only one possible element. 
+      and block. Secondary algorithm may be required in the case that no cells have only one possible element.
+      Runs in O(n^4), T(n) = n^3 + 12n^4
 Inputs: Sudoku Board B with starting parameters filled in, of size n x n
 Outputs:Sudoku Board B with every cell solved (hopefully)
 

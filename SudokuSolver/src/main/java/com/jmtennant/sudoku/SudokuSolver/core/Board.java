@@ -3,6 +3,11 @@ package com.jmtennant.sudoku.SudokuSolver.core;
 import edu.ncsu.csc316.dsa.list.ArrayBasedList;
 import edu.ncsu.csc316.dsa.list.List;
 
+/**
+ * Board Object represents a sudoku board of length and width n such that the board contains 
+ * n x n cells. Methods for access and mutation will be added as required by the different 
+ * algorithms I develop to try and tackle this problem. 
+ */
 public class Board {
 	private Cell[][] cells;
 	private int size;
@@ -188,11 +193,14 @@ public class Board {
 	
 	/** 
 	 * Getter for all the cells in a block
-	 * @param x block row coordinate (0 through sqrt(size) - 1)
-	 * @param y block col coordinate (0 through sqrt(size) - 1)
+	 * @param row cell row coordinate (0 through size - 1)
+	 * @param col cell col coordinate (0 through size - 1)
 	 * @return array of cells in block
 	 */
-	public Cell[] getBlock( int x, int y ) {
+	public Cell[] getBlock( int row, int col ) {
+		int x = getBlockOfCell(row, col)[0];
+		int y = getBlockOfCell(row, col)[1];		
+		
     	Cell[] output = new Cell[this.size];
     	int b = (int) Math.sqrt( (double) this.size );
     	int k = 0; //location in output array
