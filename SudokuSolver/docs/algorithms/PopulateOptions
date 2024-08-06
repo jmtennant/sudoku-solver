@@ -14,19 +14,19 @@ L <-- new List of integers of size n + 1
 //check through the row
 for each Cell in Board.getRow(i) do 
     if Cell not empty do
-       int x <-- Cell.getElement()
+       x <-- Cell.getElement()
        F[x] <-- true;
        
 //check through the column
 for each Cell in Board.getCol(i) do 
     if Cell not empty do
-       int x <-- Cell.getElement()
+       x <-- Cell.getElement()
        F[x] <-- true;
 
 //check through the block
 for each Cell in Board.getBlock(i) do 
     if Cell not empty do
-       int x <-- Cell.getElement()
+       x <-- Cell.getElement()
        F[x] <-- true;
 
 //populate output       

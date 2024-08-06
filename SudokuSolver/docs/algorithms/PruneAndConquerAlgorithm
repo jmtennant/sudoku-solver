@@ -1,7 +1,7 @@
 Author: Jacob Tennant (jmtennant543@gmail.com)
 Date: August 5, 2024
 
-PruneAndConquerSudokuSolver: Algorithm to solve sudoku boards using a prune & conquer approach. General approach is 
+PruneBoard: Algorithm to help solve sudoku boards using a prune & conquer approach. General approach is 
       to identify all the possible elements that could be held in each cell, and then fill in where there is only 
       one possible element. Upon filling in a cell, revisit possible elements set for other cells in row, column, 
       and block. Secondary algorithm may be required in the case that no cells have only one possible element. 
@@ -11,16 +11,52 @@ Outputs:Sudoku Board B with every cell solved (hopefully)
 Board 
 P <-- new 3D integer array
 
-//Frequency Tables
+//Frequency Tables, may not be necessary
 Rows <-- new ArrayList of integer arrays // will hold frequency tables for rows
 Columns <-- new ArrayList of integer arrays // will hold frequency tables for columns
 Blocks <-- new ArrayList of integer arrays // will hold frequency tables for blocks
 
-//populate possible elements for each cell
-for each Cell in Board do 
-    if Cell C is empty do
-        populatePossibilities(C, P)      
+Q <-- new Queue of Cells
 
-// remaining tasks: go through and fill in elements with one possibility, then revisit possiblities, then repeat
+//populate possible elements for each cell, enqueue those 
+for each Cell C in Board do 
+   if C is empty do
+       C.setOptions( PopulateOptions(C, B) )
+   if C.numOptions = 1 do
+       Q.enqueue(C)
+
+//Queue Q is full of all cells that initially only have 1 option
+//We fill in the element with that option, and then update all of the cells that could be affected
+//and add any new one-option cells to the queue
+while Q not empty do
+   Cell C <-- Q.dequeue();
+   C.setElement( C.getOptions().first() )
+   
+   //Get the Cells in the Block that C is in 
+   Block <-- Board.getBlock( C.getRow(), C.getCol() )
+   
+   for k from 0 to n-1 do 
+       //get next step in iteration from row that C is in
+       //then update options and enqueue if only one option left
+       Cell D <-- Board.getCells()[k][C.getCol()]
+       if D is empty do
+           C.setOptions( PopulateOptions(D, B) )
+       if Cell.numOptions = 1 do
+           Q.enqueue(D)
+       
+       //now do it for next in column
+       D <-- Board.getCells()[k][C.getCol()]
+       if D is empty do
+           D.setOptions( PopulateOptions(D, B) )
+       if Cell.numOptions = 1 do
+           Q.enqueue(D)
+           
+       //now do it for next in block
+       D <-- Block[k]
+       if D is empty do
+           D.setOptions( PopulateOptions(D, B) )
+       if Cell.numOptions = 1 do
+           Q.enqueue(D)
+
 
 // idea: next algorithm should use frequency tables for how many spots have each option, 

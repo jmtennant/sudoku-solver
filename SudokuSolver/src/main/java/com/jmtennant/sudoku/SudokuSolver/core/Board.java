@@ -62,7 +62,8 @@ public class Board {
 		Cell cell = this.cells[row][col];
 		int oldValue = cell.getElement();
 		cell.setElement(value);
-		
+		cell.setRow(row);
+		cell.setCol(col);
 		return oldValue;
 	}
 
@@ -118,7 +119,7 @@ public class Board {
      * @param y block column that target block is in (0 to sqrt(n)-1, incl.)
      * @return array of int values representing values of cells in the block
      */
-    public int[] getValuesInBlock( int x, int y ) {
+    public int[] getBlockValues( int x, int y ) {
     	int[] output = new int[this.size];
     	int b = (int) Math.sqrt( (double) this.size );
     	int k = 0; //location in output array
@@ -158,4 +159,51 @@ public class Board {
 	public int size() {
 		return this.size;
 	}
+	
+	/** 
+	 * Getter for all the cells in a row
+	 * @param i row coordinate
+	 * @return array of cells in column
+	 */
+	public Cell[] getRow(int i) {
+		Cell[] output = new Cell[this.size];
+		for( int j = 0; j < this.size; j++ ) {
+			output[j] = this.cells[i][j];
+		}
+		return output;
+	}
+	
+	/** 
+	 * Getter for all the cells in a column
+	 * @param j column coordinate
+	 * @return array of cells in column
+	 */
+	public Cell[] getColumn(int j) {
+		Cell[] output = new Cell[this.size];
+		for( int i = 0; j < this.size; j++ ) {
+			output[i] = this.cells[i][j];
+		}
+		return output;
+	}
+	
+	/** 
+	 * Getter for all the cells in a block
+	 * @param x block row coordinate (0 through sqrt(size) - 1)
+	 * @param y block col coordinate (0 through sqrt(size) - 1)
+	 * @return array of cells in block
+	 */
+	public Cell[] getBlock( int x, int y ) {
+    	Cell[] output = new Cell[this.size];
+    	int b = (int) Math.sqrt( (double) this.size );
+    	int k = 0; //location in output array
+    	for( int i = 0; i < b; i++) { // for sqrt(n) rows
+    		int xCoord = x*b + i; // calculate x coordinate
+    		for( int j = 0; j < b; j++ ) { // for sqrt(n) cols
+    			int yCoord = y*b + j; // calculate y coordinate
+    			output[k] = this.cells[xCoord][yCoord];
+    			k++; // move to next spot in output array
+    		}
+    	}
+    	return output;
+    }
 }
