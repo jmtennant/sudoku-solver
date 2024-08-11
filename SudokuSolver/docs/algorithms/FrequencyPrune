@@ -1,0 +1,28 @@
+Author: Jacob Tennant (jmtennant543@gmail.com)
+Date: 8/11/2024
+Last Updated:
+
+FrequencyPrune: Prune-and-conquer approach to solving sudoku boards. A more advanced algorithm than PruneBoard, FrequencyPrune has
+    less restrictive conditions for reducing the problem than PruneBoard. PruneBoard requires there to be at least one cell with only
+    one possible option to start, and assumes that solving that cell will open up another 1-option cell and so-on until the board is 
+    solved. This works, generally, for boards ranked easier but not for more difficult boards with less hints. FrequencyPrune also 
+    aims to seek out 'constants' where there is logically only one viable value for a cell (even if it has multiple 'options' so to 
+    speak), solve those constants and hope that then new constants will appear. This algorithm works in tandem with PruneBoard. 
+    FrequencyPrune has a time complexity of _____ running at T(n) = _____
+Input: Sudoku Board B
+Output: Sudoku Board B, solved (no empty cells)
+
+//Frequency Tables
+Rows <-- new ArrayList of integer arrays // will hold frequency tables for rows
+Columns <-- new ArrayList of integer arrays // will hold frequency tables for columns
+Blocks <-- new ArrayList of integer arrays // will hold frequency tables for blocks
+
+//start with a prune, this will also populate the options for each cell
+PruneBoard( B )
+
+//initialize the frequency tables
+for i from 0 to n-1 do
+    Rows.addLast( new integer array of size n+1 )
+    Columns.addLast( new integer array of size n+1 )
+    Blocks.addLast( new integer array of size n+1 )
+

@@ -32,7 +32,7 @@ public class BasicBoardCheck extends BoardCheck {
 				}
 				//check the row, col, block for matching values
 				int[] blockCoords = board.getBlockOfCell(i, j);
-				int[] block = board.getValuesInBlock(blockCoords[0], blockCoords[1]);
+				int[] block = board.getBlockValues(blockCoords[0], blockCoords[1]);
 				//iterate through 0 to n - 1
 				for( int k = 0; k < n; k++ ) {
 					

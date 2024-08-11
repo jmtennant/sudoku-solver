@@ -3,20 +3,15 @@ Date: August 5, 2024
 Last Updated: August 6, 2024
 
 PruneBoard: Algorithm to help solve sudoku boards using a prune & conquer approach. General approach is 
-      to identify all the possible elements that could be held in each cell, and then fill in where there is only 
-      one possible element. Upon filling in a cell, revisit possible elements set for other cells in row, column, 
-      and block. Secondary algorithm may be required in the case that no cells have only one possible element.
-      Runs in O(n^4), T(n) = n^3 + 12n^4
+    to identify all the possible elements that could be held in each cell, and then fill in where there is only 
+    one possible element. Upon filling in a cell, revisit possible elements set for other cells in row, column, 
+    and block. Secondary algorithm may be required in the case that no cells have only one possible element.
+    Runs in O(n^4), T(n) = n^3 + 12n^4
 Inputs: Sudoku Board B with starting parameters filled in, of size n x n
 Outputs:Sudoku Board B with every cell solved (hopefully)
 
 Board 
 P <-- new 3D integer array
-
-//Frequency Tables, may not be necessary
-Rows <-- new ArrayList of integer arrays // will hold frequency tables for rows
-Columns <-- new ArrayList of integer arrays // will hold frequency tables for columns
-Blocks <-- new ArrayList of integer arrays // will hold frequency tables for blocks
 
 Q <-- new Queue of Cells
 
@@ -61,4 +56,3 @@ while Q not empty do
            Q.enqueue(D)
 
 
-// idea: next algorithm should use frequency tables for how many spots have each option, 
