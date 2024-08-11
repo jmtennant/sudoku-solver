@@ -10,7 +10,7 @@ FrequencyPrune: Prune-and-conquer approach to solving sudoku boards. A more adva
     speak), solve those constants and hope that then new constants will appear. This algorithm works in tandem with PruneBoard. 
     FrequencyPrune has a time complexity of _____ running at T(n) = _____
 Input: Sudoku Board B
-Output: Sudoku Board B, solved (no empty cells)
+Output: Sudoku Board B, solved (no empty cells)  
 
 //Frequency Tables
 Rows <-- new ArrayList of integer arrays // will hold frequency tables for rows
