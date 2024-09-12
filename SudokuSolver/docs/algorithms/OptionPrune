@@ -1,0 +1,18 @@
+Author: Jacob Tennant
+Date: September 5, 2024
+Updated: September 5, 2024
+
+If there are N cells in a group (block, row, or column) that have the same set of N options, then those N cells must hold
+those elements, in some order, and therefore those N options can be removed from the option banks for the rest of the 
+cells in the group. For example, if two cells in a row have the option sets {6, 8}, then 6 and 8 can be removed from the 
+option sets of the rest of the cells in the group.
+
+Algorithm: OptionPrune OptionPrune is an algorithm to prune the listed options for cells in a sudoku board based off of
+           			   the above logical assertion. It checks each row, column, and block to see if the options can be 
+           			   reduced, and reduces them if so. If any options are reduced, the board is checked again to see if
+           			   new option sets apply to the rule and can be reduced. This algorithm should be used in tandem with 
+           			   PruneBoard and FrequencyPrune for optimal results. 
+           			   Runtime: T(n) = 3n^2(n-1)*n^2 = 3n^5-3n^4
+           			   Time Complexity: O(n^5)
+Input: Board B of size NxN
+Output: Board B with options reduced.

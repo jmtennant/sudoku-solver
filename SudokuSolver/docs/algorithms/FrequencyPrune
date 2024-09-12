@@ -8,21 +8,142 @@ FrequencyPrune: Prune-and-conquer approach to solving sudoku boards. A more adva
     solved. This works, generally, for boards ranked easier but not for more difficult boards with less hints. FrequencyPrune also 
     aims to seek out 'constants' where there is logically only one viable value for a cell (even if it has multiple 'options' so to 
     speak), solve those constants and hope that then new constants will appear. This algorithm works in tandem with PruneBoard. 
-    FrequencyPrune has a time complexity of _____ running at T(n) = _____
-Input: Sudoku Board B
-Output: Sudoku Board B, solved (no empty cells)  
+    FrequencyPrune has a worst case time complexity of O(n^6) (Expected O(n^5))
+Input: sudoku board Board of size N x N
+Output: sudoku board Board, solved (no empty cells)  
 
 //Frequency Tables
 Rows <-- new ArrayList of integer arrays // will hold frequency tables for rows
 Columns <-- new ArrayList of integer arrays // will hold frequency tables for columns
 Blocks <-- new ArrayList of integer arrays // will hold frequency tables for blocks
 
-//start with a prune, this will also populate the options for each cell
-PruneBoard( B )
+//start by populating the options for the empty cells
+for each Cell C in B do 
+   if C.isEmpty() do
+       C.setOptions( PopulateOptions(C, B) )
 
 //initialize the frequency tables
 for i from 0 to n-1 do
-    Rows.addLast( new integer array of size n+1 )
-    Columns.addLast( new integer array of size n+1 )
-    Blocks.addLast( new integer array of size n+1 )
+   	Rows.addLast( new integer array of size n+1 )
+   	Columns.addLast( new integer array of size n+1 )
+   	Blocks.addLast( new integer array of size n+1 )
 
+//populate the frequency tables with initial values
+populateFrequencies(Rows, Columns, Blocks)
+
+//Queue will hold cells that can be solved
+Q <-- new Queue of <Cell, Number> entries
+
+//find cells with option frequency = 1 in Rows
+for k from 0 to N-1 do
+    A[] <-- Rows.get(k)
+    for i = 1 to N do
+        if A[i] = 1 do
+            for each Cell in Board.getRow(k) do
+                if i in Cell.getOptions do
+                    Q.enqueue(C, i)
+            
+//repeat for Columns
+for k from 0 to N-1 do
+    A[] <-- Columns.get(k)
+    for i = 1 to N do
+        if A[i] = 1 do
+            for each Cell in Board.getColumns(k) do
+                if i in Cell.getOptions do
+                    Q.enqueue(C, i)
+
+//Repeat for Blocks
+for k from 0 to N-1 do
+    A[] <-- Blocks.get(k)
+    for i = 1 to N do
+        if A[i] = 1 do
+            for each Cell in Board.getBlockSequentially(k) do
+                if i in Cell.getOptions do
+                    Q.enqueue(C, i)
+                    
+//update cell -> update options in BRC -> update option frequencies for whole board -> add new freq-1 cells to queue
+while Q not empty do 
+    Entry <-- Q.dequeue()
+    C <-- Entry.getCell()
+    C.setElement(Entry.getNumber())
+    
+    //re-populate the options for each affected cell
+    for each Cell D in Board.getRow(C.getRow()) do
+    	D.setOptions( PopulateOptions(D, Board)
+    for each Cell D in Board.getRow(C.getRow()) do
+        D.setOptions( PopulateOptions(D, Board)
+    b[] = Cell.getBlock()
+    for each Cell D in Board.getBlock(b[0], b[1]) do    
+        D.setOptions( PopulateOptions(D, Board)
+    
+    
+    //recount the frequencies for the whole board
+    populateFrequencies(Rows, Columns, Blocks)
+    
+    //find new cells with freq-1 options and add them to the queue
+    //find cells with option frequency = 1 in Rows
+	for k from 0 to N-1 do
+    	A[] <-- Rows.get(k)
+    	for i = 1 to N do
+        	if A[i] = 1 do
+            	for each Cell in Board.getRow(k) do
+                	if i in Cell.getOptions do
+                    	Q.enqueue(C, i)
+            
+	//repeat for Columns
+	for k from 0 to N-1 do
+    	A[] <-- Columns.get(k)
+    	for i = 1 to N do
+        	if A[i] = 1 do
+            	for each Cell in Board.getColumns(k) do
+                	if i in Cell.getOptions do
+                    	Q.enqueue(C, i)
+
+	//Repeat for Blocks
+	for k from 0 to N-1 do
+    	A[] <-- Blocks.get(k)
+    	for i = 1 to N do
+        	if A[i] = 1 do
+            	for each Cell in Board.getBlockSequentially(k) do
+                	if i in Cell.getOptions do
+                    	Q.enqueue(C, i)
+    
+//////////// Helper functions
+
+populateFrequencies( Rows, Columns, Blocks ) 
+//assume that parameters have already been initialized (previous values will be cleared and recounted)
+	//clear previous values in frequency tables
+	for j from 0 to Rows.size()-1 do
+	    RowTable <-- Rows.get(j)
+	    ColTable <-- Columns.get(j)
+	    BlockTable <-- Blocks.get(j)
+	    for k from 1 to RowTable.size()-1 do  
+            RowTable[k] <-- 0
+            ColTable[k] <-- 0
+            BlockTable[k] <-- 0
+    
+    //count up how many times each option appears for each row, block, column
+	for each Cell C in B do 
+	    if C.isEmpty() do 
+    	    // for each option in the cell
+       		for each i in C.getOptions() do
+            	//populate for row
+            	Rows.get(C.getRow())[i] <-- Rows.get(C.getRow())[i] + 1
+            
+            	//populate for column
+            	Columns.get(C.getCol())[i] <-- Columns.get(C.getCol())[i] + 1
+            
+            	//populate for block (TODO) 
+            	k <-- sqrt(N) * C.getBlock()[0] + C.getBlock()[1] 
+            	Blocks.get(k)[i] <-- Blocks.get(k)[i] + 1     
+    
+    
+     
+
+////////////TODO:
+-update cell where frequency = 1
+-update options
+   -> access and update options for cells in row, col, block
+-update frequencies based on options
+-check for new cells with frequency 1   
+    

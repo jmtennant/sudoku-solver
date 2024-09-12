@@ -53,6 +53,12 @@ public class Board {
 		}
 	}
 	
+	public Cell getCell( int row, int col ) {
+		validateCoordinates(row, col);
+		return this.cells[row][col];
+	}
+	
+	
 	/**
 	 * Setter for cell 
 	 * @param row Row coordinate of target cell

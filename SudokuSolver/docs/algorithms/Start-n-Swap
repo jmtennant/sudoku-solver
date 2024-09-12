@@ -1,0 +1,3 @@
+Start-n-Swap Algorithm
+ Start with default generated sudoku board and switch around until it matches the original number positions
+ Could work who knows?? runtime might be unbounded tho
