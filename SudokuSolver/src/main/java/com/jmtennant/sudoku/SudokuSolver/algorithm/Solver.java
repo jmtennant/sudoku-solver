@@ -6,7 +6,7 @@ import com.jmtennant.sudoku.SudokuSolver.core.Board;
  * Interface to standardize the method by which different algorithms will solve sudoku boards
  * 
  * @author Jacob Tennant
- * @version August 6, 2024
+ * @version August 6, 2024 
  */
 public interface Solver {
 
