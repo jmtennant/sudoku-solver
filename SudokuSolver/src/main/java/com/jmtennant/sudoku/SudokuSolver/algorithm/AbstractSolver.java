@@ -23,14 +23,17 @@ public abstract class AbstractSolver implements Solver {
 	 * @param board Sudoku Board that cell is on
 	 * @return List of integers of the options of possible numbers that could go in cell
 	 */
-	protected List<Integer> populateOptions(Cell c, Board board){
-		//if cell isn't empty, already has a number so no options
-		if( !c.isEmpty() ) {
-			return null;
-		}
+	protected static List<Integer> getCellOptions(Cell c, Board board){
+		
 		
 		//initialize
 		List<Integer> output = new ArrayBasedList<Integer>(board.size() + 1);
+		
+		//if cell isn't empty, already has a number so no options
+		if( !c.isEmpty() ) {
+			return output;
+		}
+		
 		boolean[] found = new boolean[board.size()+1];
 		int row = c.getRow();
 		int col = c.getCol();
@@ -63,7 +66,19 @@ public abstract class AbstractSolver implements Solver {
 			}
 		}
 		
+		
 		return output;		
 	}
 
+	
+	public static void populateOptions(Board board) {
+		for( int i = 0; i < board.size(); i++ ) {
+			for( int j = 0; j < board.size(); j++ ) {
+				Cell cell = board.getCell(i, j);
+				cell.setOptions( getCellOptions(cell, board) );
+			}
+		}
+		
+		
+	}
 }

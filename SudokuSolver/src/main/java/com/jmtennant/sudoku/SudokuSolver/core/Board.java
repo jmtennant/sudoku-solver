@@ -29,6 +29,8 @@ public class Board {
 		for( int i = 0; i < this.cells.length; i++ ) {
 			for( int j = 0; j < this.cells[i].length; j++ ) {
 				this.cells[i][j] = new Cell();
+				this.cells[i][j].setRow(i);
+				this.cells[i][j].setCol(j);
 			}
 		}
 	}
@@ -197,7 +199,7 @@ public class Board {
 	 */
 	public Cell[] getColumn(int j) {
 		Cell[] output = new Cell[this.size];
-		for( int i = 0; j < this.size; j++ ) {
+		for( int i = 0; i < this.size; i++ ) {
 			output[i] = this.cells[i][j];
 		}
 		return output;
