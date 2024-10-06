@@ -51,4 +51,29 @@ public class SudokuBoardReader {
 			throw e;
 		}
 	}
+	
+	public static Board readBoardGridFormat( String file ) throws FileNotFoundException, IOException {
+		try( FileReader freader = new FileReader(file);
+			BufferedReader reader = new BufferedReader( freader );){
+				
+			String line = reader.readLine(); // read first line	to get size
+			if(line == null) {
+				throw new IOException("File is empty");
+			}
+			int size = Integer.parseInt(line.trim()); // extract value to get board size
+			Board board = new Board(size);
+			int rowTracker = 0;
+			while( (line = reader.readLine())  != null && rowTracker < size) { // for each subsequent line
+				String[] values = line.split(","); // split by commas
+				for( int i = 0; i < values.length; i++ ) {
+					board.setCellValue(rowTracker, i, Integer.parseInt(values[i]) ); //add each value to corr. cell
+				}
+				rowTracker++; //move to next row
+			}
+			//return
+			return board;	
+		} catch( Exception e ) {	
+			throw e;
+		}
+	}
 }

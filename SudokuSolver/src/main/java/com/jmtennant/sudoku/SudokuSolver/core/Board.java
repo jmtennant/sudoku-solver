@@ -24,7 +24,13 @@ public class Board {
 			throw new IllegalArgumentException("Invalid Board size: " + size + " is not a perfect square");
 		}
 		this.size = size;
-		this.cells = new Cell[this.size][this.size];
+		this.cells = new Cell[this.size][this.size]; //instantiate array
+		//instantiate each element in array
+		for( int i = 0; i < this.cells.length; i++ ) {
+			for( int j = 0; j < this.cells[i].length; j++ ) {
+				this.cells[i][j] = new Cell();
+			}
+		}
 	}
 	
 	/**
@@ -220,4 +226,16 @@ public class Board {
     	}
     	return output;
     }
+	
+	public void print() {
+		StringBuilder builder = new StringBuilder();
+		for( Cell[] row : this.cells ) {
+			for( Cell cell : row ) {
+				builder.append(cell.getElement());
+				builder.append(",");
+			}
+			builder.append("\n");
+		}
+		System.out.print(builder.toString());
+	}
 }

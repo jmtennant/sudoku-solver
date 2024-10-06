@@ -19,7 +19,7 @@ import edu.ncsu.csc316.dsa.list.List;
 @SuppressWarnings("serial")
 public class SudokuUI extends JFrame {
 	private JPanel boardPanel;
-	private String boardFile = ""; //TODO: Put file here
+	private String boardFile = "C:\\Users\\jacob\\git\\sudoku-solver\\SudokuSolver\\input\\board-G-9-1.txt";
 	private Board board;
 	private final int boardSize;
 	private JPanel[][] cellPanels;
@@ -28,8 +28,9 @@ public class SudokuUI extends JFrame {
 	public SudokuUI() {
 		//build the board object from input
 		try {
-			board = SudokuBoardReader.readBoardCoordinateFormat(boardFile);
+			board = SudokuBoardReader.readBoardGridFormat(boardFile);
 		} catch ( IOException e ) {
+			System.out.println(e.getMessage());
 			System.out.println("Invalid input in file: " + boardFile);
 			System.exit(1);
 		}
