@@ -37,21 +37,21 @@ while Q not empty do
        //then update options and enqueue if only one option left
        Cell D <-- Board.getCells()[k][C.getCol()]
        if D is empty do
-           C.setOptions( PopulateOptions(D, B) )
+           C.setOptions( getCellOptions(D, B) )
        if Cell.numOptions = 1 do
            Q.enqueue(D)
        
        //now do it for next in column
        D <-- Board.getCells()[k][C.getCol()]
        if D is empty do
-           D.setOptions( PopulateOptions(D, B) )
+           D.setOptions( getCellOptions(D, B) )
        if Cell.numOptions = 1 do
            Q.enqueue(D)
            
        //now do it for next in block
        D <-- Block[k]
        if D is empty do
-           D.setOptions( PopulateOptions(D, B) )
+           D.setOptions( getCellOptions(D, B) )
        if Cell.numOptions = 1 do
            Q.enqueue(D)
 

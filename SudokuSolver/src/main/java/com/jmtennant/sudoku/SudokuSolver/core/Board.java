@@ -229,6 +229,14 @@ public class Board {
     	return output;
     }
 	
+	public List<Integer> setCellOptions(int row, int col, List<Integer> options){
+		validateCoordinates(row, col);
+		Cell cell = this.cells[row][col];
+		List<Integer> oldOptions = cell.getOptions();
+		cell.setOptions(options);
+		return oldOptions;
+	}
+	
 	public void print() {
 		StringBuilder builder = new StringBuilder();
 		for( Cell[] row : this.cells ) {

@@ -15,5 +15,5 @@ public interface Solver {
 	 * @param board sudoku board object to have the solver solve
 	 * @return solved version of argued sudoku board
 	 */
-	public Board solveBoard( Board board );
+	public void solveBoard( Board board );
 }

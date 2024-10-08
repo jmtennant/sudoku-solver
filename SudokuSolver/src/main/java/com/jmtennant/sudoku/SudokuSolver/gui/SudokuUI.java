@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.swing.*;
 
 import com.jmtennant.sudoku.SudokuSolver.algorithm.AbstractSolver;
+import com.jmtennant.sudoku.SudokuSolver.algorithm.PruneSolver;
 import com.jmtennant.sudoku.SudokuSolver.algorithm.Solver;
 import com.jmtennant.sudoku.SudokuSolver.core.Board;
 import com.jmtennant.sudoku.SudokuSolver.util.SudokuBoardReader;
@@ -20,8 +21,9 @@ import edu.ncsu.csc316.dsa.list.List;
 @SuppressWarnings("serial")
 public class SudokuUI extends JFrame {
 	private JPanel boardPanel;
-	private String boardFile = "C:\\Users\\jacob\\git\\sudoku-solver\\SudokuSolver\\input\\board-G-9-1.txt";
+	private String boardFile = "C:\\Users\\jacob\\git\\sudoku-solver\\SudokuSolver\\input\\board-G-9-2.txt";
 	private Board board;
+	private Solver solver;
 	private final int boardSize;
 	private JPanel[][] cellPanels;
 	private static final int FONT_SIZE = 25;
@@ -32,8 +34,12 @@ public class SudokuUI extends JFrame {
 		//build the board object from input
 		try {
 			board = SudokuBoardReader.readBoardGridFormat(boardFile);
-			AbstractSolver.populateOptions(board);
-			//board.print();
+			solver = new PruneSolver();
+			
+			
+			//AbstractSolver.populateOptions(board);
+			solver.solveBoard(board);
+			
 		} catch ( IOException e ) {
 			System.out.println(e.getMessage());
 			System.out.println("Invalid input in file: " + boardFile);

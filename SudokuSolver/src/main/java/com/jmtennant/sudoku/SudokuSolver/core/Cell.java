@@ -83,7 +83,7 @@ public class Cell {
      * @return
      */
 	public int numOptions() {
-		if( this.element != 0 ) {
+		if( this.element == 0 ) {
 			return this.options.size();
 		} else {
 			return 0;

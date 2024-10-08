@@ -66,7 +66,13 @@ public class SudokuBoardReader {
 			while( (line = reader.readLine())  != null && rowTracker < size) { // for each subsequent line
 				String[] values = line.split(","); // split by commas
 				for( int i = 0; i < values.length; i++ ) {
-					board.setCellValue(rowTracker, i, Integer.parseInt(values[i]) ); //add each value to corr. cell
+					int value = Integer.parseInt(values[i]);
+					if( value != 0 ) {
+						board.setCellValue(rowTracker, i, value ); //add each value to corr. cell
+					} else {
+						board.setCellToEmpty(rowTracker, i);
+					}
+					
 				}
 				rowTracker++; //move to next row
 			}
