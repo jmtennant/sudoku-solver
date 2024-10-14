@@ -1,7 +1,7 @@
 package com.jmtennant.sudoku.SudokuSolver.core;
 
-import edu.ncsu.csc316.dsa.list.ArrayBasedList;
-import edu.ncsu.csc316.dsa.list.List;
+import java.util.ArrayList;
+import java.util.List;
 
 /**  
  * Sudoku cell class, a Cell object represents a cell in the sudoku board and holds the element in that cell
@@ -21,7 +21,9 @@ public class Cell {
 	/** Column in board that cell is in */
 	private int col;
 	
-	private ArrayBasedList<Integer> options;
+	private ArrayList<Integer> options;
+	
+	private boolean isHint;
 	
 	/**
 	 * Constructor that creates an empty cell
@@ -37,7 +39,8 @@ public class Cell {
 	public Cell(int element) {
 		super();
 	    setElement(element);
-	    options = new ArrayBasedList<Integer>();
+	    options = new ArrayList<Integer>();
+	    setHint(false); //cell is not a hint cell by default
 	}
 
 	/**
@@ -73,10 +76,7 @@ public class Cell {
 	}
 	
 	public void setOptions( List<Integer> newOptions ) {
-		this.options = new ArrayBasedList<Integer>();
-		for( int i = 0; i < newOptions.size(); i++) {
-			this.options.addLast(newOptions.get(i));
-		}
+		this.options = new ArrayList<Integer>(newOptions);
 	}
     /**
      * Getter for number of options. If cell not empty, returns 0;
@@ -122,7 +122,29 @@ public class Cell {
 		this.col = col;
 	}
 	
+	/**
+	 * Accessor for empty status
+	 * @return true if empty, else false
+	 */
 	public boolean isEmpty() {
 		return this.element == 0;
+	}
+	
+	/**
+	 * Accessor for hint status
+	 * @return true if is a hint (ie a starting value on board)
+	 */
+	public boolean isHint() {
+		return this.isHint;
+	}
+	
+	public void setHint( boolean isHint ) {
+		this.isHint = isHint;
+	}
+	
+	public String toString() {
+		String output = "";
+		output += "(" + this.row + ", " + this.col + "), val = " + this.element;
+		return output;
 	}
 }

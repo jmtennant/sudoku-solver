@@ -58,17 +58,21 @@ public class SudokuBoardReader {
 				
 			String line = reader.readLine(); // read first line	to get size
 			if(line == null) {
-				throw new IOException("File is empty");
+				throw new IOException("File is empty, dumbass");
 			}
 			int size = Integer.parseInt(line.trim()); // extract value to get board size
 			Board board = new Board(size);
 			int rowTracker = 0;
 			while( (line = reader.readLine())  != null && rowTracker < size) { // for each subsequent line
 				String[] values = line.split(","); // split by commas
+				if( values.length != size ) {
+					throw new IOException("Invalid board, not all lines are " + size + "cells");
+				}
 				for( int i = 0; i < values.length; i++ ) {
 					int value = Integer.parseInt(values[i]);
 					if( value != 0 ) {
 						board.setCellValue(rowTracker, i, value ); //add each value to corr. cell
+						board.getCell(rowTracker, i).setHint(true); //indicate that this is a hint cell
 					} else {
 						board.setCellToEmpty(rowTracker, i);
 					}
@@ -77,6 +81,9 @@ public class SudokuBoardReader {
 				rowTracker++; //move to next row
 			}
 			//return
+			if( rowTracker < size - 1 ) {
+				throw new IOException("Invalid board, not enough lines");
+			}
 			return board;	
 		} catch( Exception e ) {	
 			throw e;

@@ -18,7 +18,8 @@ public class PruneSolver extends AbstractSolver {
 
 	
 	@Override
-	public void solveBoard(Board board) {
+	public boolean solveBoard(Board board) {
+		boolean hasEffect = false;
 		int n = board.size();
 		Queue<Cell> cellQueue = new ArrayBasedQueue<Cell>();
 		
@@ -41,7 +42,8 @@ public class PruneSolver extends AbstractSolver {
 			Cell cell = cellQueue.dequeue();
 			board.setCellValue(cell.getRow(), 
 					           cell.getCol(), 
-					           cell.getOptions().first());
+					           cell.getOptions().getFirst());
+			hasEffect = true;
 			
 			//get the cells in the block that C is in
 			Cell[] block = board.getBlock( cell.getRow(), cell.getCol());
@@ -82,6 +84,7 @@ public class PruneSolver extends AbstractSolver {
 				}
 			}
 		}
+		return hasEffect;
 	}
 
 }

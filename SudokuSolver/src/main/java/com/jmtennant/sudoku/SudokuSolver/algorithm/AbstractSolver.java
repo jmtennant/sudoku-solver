@@ -3,11 +3,14 @@
  */
 package com.jmtennant.sudoku.SudokuSolver.algorithm;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import com.jmtennant.sudoku.SudokuSolver.core.Board;
 import com.jmtennant.sudoku.SudokuSolver.core.Cell;
 
-import edu.ncsu.csc316.dsa.list.ArrayBasedList;
-import edu.ncsu.csc316.dsa.list.List;
+
 
 /**
  * Abstract Class to hold helper methods that would be useful regardless of the exact solving algorithm
@@ -27,11 +30,11 @@ public abstract class AbstractSolver implements Solver {
 		
 		
 		//initialize
-		List<Integer> output = new ArrayBasedList<Integer>(board.size() + 1);
+		List<Integer> output = new ArrayList<Integer>(board.size() + 1);
 		
 		//if cell isn't empty, already has a number so no options
 		if( !c.isEmpty() ) {
-			return output;
+			return Collections.emptyList();
 		}
 		
 		boolean[] found = new boolean[board.size()+1];
@@ -75,7 +78,9 @@ public abstract class AbstractSolver implements Solver {
 		for( int i = 0; i < board.size(); i++ ) {
 			for( int j = 0; j < board.size(); j++ ) {
 				Cell cell = board.getCell(i, j);
-				cell.setOptions( getCellOptions(cell, board) );
+				if( cell.isEmpty() ) {
+					cell.setOptions( getCellOptions(cell, board) );
+				}
 			}
 		}
 		

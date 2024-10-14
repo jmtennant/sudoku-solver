@@ -13,7 +13,7 @@ public interface Solver {
 	/**
 	 * General Solver method that BoardSolvers will implement to solve sudoku boards
 	 * @param board sudoku board object to have the solver solve
-	 * @return solved version of argued sudoku board
+	 * @return boolean of whether heuristic had any effect on the board
 	 */
-	public void solveBoard( Board board );
+	public boolean solveBoard( Board board );
 }

@@ -8,12 +8,14 @@ import java.io.IOException;
 import javax.swing.*;
 
 import com.jmtennant.sudoku.SudokuSolver.algorithm.AbstractSolver;
+import com.jmtennant.sudoku.SudokuSolver.algorithm.FrequencySolver;
 import com.jmtennant.sudoku.SudokuSolver.algorithm.PruneSolver;
 import com.jmtennant.sudoku.SudokuSolver.algorithm.Solver;
 import com.jmtennant.sudoku.SudokuSolver.core.Board;
+import com.jmtennant.sudoku.SudokuSolver.helper.BasicBoardCheck;
 import com.jmtennant.sudoku.SudokuSolver.util.SudokuBoardReader;
 
-import edu.ncsu.csc316.dsa.list.List;
+import java.util.List;
 
 /**
  * UI Class to visualize sudoku solver
@@ -21,24 +23,42 @@ import edu.ncsu.csc316.dsa.list.List;
 @SuppressWarnings("serial")
 public class SudokuUI extends JFrame {
 	private JPanel boardPanel;
-	private String boardFile = "C:\\Users\\jacob\\git\\sudoku-solver\\SudokuSolver\\input\\board-G-9-2.txt";
+	private String boardFile = "C:\\Users\\jacob\\git\\sudoku-solver\\SudokuSolver\\input\\board-G-16-1.txt";
 	private Board board;
 	private Solver solver;
 	private final int boardSize;
 	private JPanel[][] cellPanels;
 	private static final int FONT_SIZE = 25;
 	private static final int OPTION_FONT_SIZE = 10;
+	private static final int FRAME_FACTOR = 50;
 	
 	
 	public SudokuUI() {
 		//build the board object from input
 		try {
 			board = SudokuBoardReader.readBoardGridFormat(boardFile);
-			solver = new PruneSolver();
+			Solver pruneSolver = new PruneSolver();
+			Solver freqSolver = new FrequencySolver();
+			BasicBoardCheck checker = new BasicBoardCheck();
 			
+			board.print();
+			System.out.println("After:");
+			AbstractSolver.populateOptions(board);
+			freqSolver.solveBoard(board);
+			//pruneSolver.solveBoard(board);
+			board.print();
 			
-			//AbstractSolver.populateOptions(board);
-			solver.solveBoard(board);
+			System.out.println("BoardCheck returns: " + checker.checkBoard(board) );
+			boolean hadEffect = false;
+			/*
+			do {
+				boolean pruneOutput = pruneSolver.solveBoard(board);
+				System.out.println("PruneSolver returning: " + pruneOutput);
+				boolean freqOutput = freqSolver.solveBoard(board);
+				System.out.println("FrequencySolver returning: " + freqOutput);
+				hadEffect = pruneOutput || freqOutput;
+			} while( hadEffect );
+			*/
 			
 		} catch ( IOException e ) {
 			System.out.println(e.getMessage());
@@ -48,7 +68,7 @@ public class SudokuUI extends JFrame {
 		boardSize = board.size();
 		//set UI variables
 		setTitle("Sudoku Board: " + boardSize + "x" + boardSize);
-		setSize(600, 600);
+		setSize(FRAME_FACTOR * boardSize, FRAME_FACTOR * boardSize);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//Create a JPanel with GridLayout for the Sudoku Board
@@ -161,6 +181,11 @@ public class SudokuUI extends JFrame {
 		if( value != 0 ) {
 			valueLabel.setText(String.valueOf(value));
 			cardLayout.show(cellPanel, "value");
+			if( board.getCell(row, col).isHint() ) {
+				valueLabel.setForeground(Color.BLACK); //set hints to black font
+			} else {
+				valueLabel.setForeground(Color.BLUE); //set solved cells to blue
+			}
 		} else {
 			cardLayout.show(cellPanel, "options");
 		}

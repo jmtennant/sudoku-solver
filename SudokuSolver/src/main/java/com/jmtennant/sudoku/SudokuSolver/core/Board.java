@@ -1,7 +1,7 @@
 package com.jmtennant.sudoku.SudokuSolver.core;
 
-import edu.ncsu.csc316.dsa.list.ArrayBasedList;
-import edu.ncsu.csc316.dsa.list.List;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Board Object represents a sudoku board of length and width n such that the board contains 
@@ -9,7 +9,7 @@ import edu.ncsu.csc316.dsa.list.List;
  * algorithms I develop to try and tackle this problem. 
  */
 public class Board {
-	private Cell[][] cells;
+	private Cell[][] cells; //rows, columns
 	private int size;
 	
 	/**
@@ -120,7 +120,7 @@ public class Board {
      * @return an ArrayList of Cells from the block
      */
     public List<Cell> getListCellsFromBlock( int x, int y){
-    	List<Cell> output = new ArrayBasedList<Cell>(size);
+    	List<Cell> output = new ArrayList<Cell>(size);
     	int b = (int) Math.sqrt( (double) this.size );
     	for( int i = 0; i < b; i++) { // for sqrt(n) rows
     		int xCoord = x*b + i; // calculate x coordinate
@@ -215,7 +215,12 @@ public class Board {
 		int x = getBlockOfCell(row, col)[0];
 		int y = getBlockOfCell(row, col)[1];		
 		
-    	Cell[] output = new Cell[this.size];
+		return getBlockFromBCoords( x, y );
+    	
+    }
+	
+	public Cell[] getBlockFromBCoords(int x, int y) {
+		Cell[] output = new Cell[this.size];
     	int b = (int) Math.sqrt( (double) this.size );
     	int k = 0; //location in output array
     	for( int i = 0; i < b; i++) { // for sqrt(n) rows
@@ -227,7 +232,7 @@ public class Board {
     		}
     	}
     	return output;
-    }
+	}
 	
 	public List<Integer> setCellOptions(int row, int col, List<Integer> options){
 		validateCoordinates(row, col);
@@ -248,4 +253,6 @@ public class Board {
 		}
 		System.out.print(builder.toString());
 	}
+
+	
 }

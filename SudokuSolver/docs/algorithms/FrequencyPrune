@@ -139,11 +139,5 @@ populateFrequencies( Rows, Columns, Blocks )
     
     
      
-
-////////////TODO:
--update cell where frequency = 1
--update options
-   -> access and update options for cells in row, col, block
--update frequencies based on options
--check for new cells with frequency 1   
+ 
     
