@@ -58,7 +58,7 @@ public class SudokuBoardReader {
 				
 			String line = reader.readLine(); // read first line	to get size
 			if(line == null) {
-				throw new IOException("File is empty, dumbass");
+				throw new IOException("File is empty");
 			}
 			int size = Integer.parseInt(line.trim()); // extract value to get board size
 			Board board = new Board(size);
