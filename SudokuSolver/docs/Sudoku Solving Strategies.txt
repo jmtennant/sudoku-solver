@@ -1,0 +1,36 @@
+Sudoku Solving Strategies Notes
+
+research: 
+- A.) https://masteringsudoku.com/sudoku-solving-techniques/
+- logical deductions
+
+Singles: 
+	Conditions: Only one option p for a cell -> cell.numOptions() == 1, cell.getOptions() = { p } 
+	Conclusions: Can solve the cell for that option p
+
+Hidden Single: (Derived from Hidden siblings with n = 1) 
+	Conditions: Option p only appears once in a given grouping
+	Conclusions: Can solve the cell that option p appears in with that cell
+
+Pairs: 
+	Conditions: 2 cells in a grouping have the same two options (and only 2 options) -> cellA.getOptions() == cellB.getOptions() && cellA.numOptions() == 2
+	Conclusion: Can remove those two options from the rest of the cells in that grouping
+
+Triplets: 
+	Conditions: Like pairs but 3 of them with 3 options -> cellA.getOptions() == cellB.getOptions() == cellC.getOptions() && cellA.numOptions() == 3
+	Conclusion: Can remove those 3 options from the rest of the cells in that grouping
+
+N-siblings: 
+	Conditions: n cells in a grouping all have the same set of n options
+	Conclusion: Can remove those n options from the rest of the cells in that grouping
+
+Hidden siblings: (Derived from A's "Hidden Pairs")
+	Conditions: Same n options p1, p2, ..., pn (or a subset of those options) appear in exactly n cells in a grouping 
+	Conclusion: Can remove all non-p options from each of the n cells in the grouping
+	Example: { A{3,4}, B{2}, C{3,4,8}, D{3,6,8}, E{1,3,5,7}, F{3,4,8} G{1,5,7,8}, H{9}, I{1,6,7} } has {1,5,7} only appear in E, G, I, 
+	         so we can reduce these options to E{1,5,7}, G{1,5,7}, I{1,7}
+	         
+
+
+
+

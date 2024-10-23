@@ -89,4 +89,26 @@ public class SudokuBoardReader {
 			throw e;
 		}
 	}
+	
+	/**
+	 * 
+	 * @param input
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public static Board readBoardFromLineString( String input ) throws IllegalArgumentException{
+		int size = (int) Math.sqrt( (double) input.length() );
+		//if not double-square-root-able then invalid String length
+		if( Math.sqrt((double) input.length()) % 1 != 0 || Math.sqrt((double) size) % 1 != 0) {
+			throw new IllegalArgumentException("Invalid string length");
+		}
+		Board board = new Board( size );
+		int root = (int) Math.sqrt((double) size);
+		for( int i = 0; i < input.length(); i++ ) {
+			int row = i / size;
+			int col = i % size;
+			board.setCellValue(row, col, Integer.valueOf( input.charAt(i) ) );
+		}
+		return board;
+	}
 }

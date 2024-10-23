@@ -12,7 +12,7 @@ import com.jmtennant.sudoku.SudokuSolver.algorithm.FrequencySolver;
 import com.jmtennant.sudoku.SudokuSolver.algorithm.PruneSolver;
 import com.jmtennant.sudoku.SudokuSolver.algorithm.Solver;
 import com.jmtennant.sudoku.SudokuSolver.core.Board;
-import com.jmtennant.sudoku.SudokuSolver.helper.BasicBoardCheck;
+import com.jmtennant.sudoku.SudokuSolver.helper.BoardChecker;
 import com.jmtennant.sudoku.SudokuSolver.util.SudokuBoardReader;
 
 import java.util.List;
@@ -23,14 +23,19 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class SudokuUI extends JFrame {
 	private JPanel boardPanel;
-	private String boardFile = "C:\\Users\\jacob\\git\\sudoku-solver\\SudokuSolver\\input\\board-G-16-1.txt";
+	private String boardFile = "C:\\Users\\jacob\\git\\sudoku-solver\\SudokuSolver\\input\\boards\\board-G-9-3.txt";
 	private Board board;
 	private Solver solver;
 	private final int boardSize;
 	private JPanel[][] cellPanels;
+	
+	//constants for customizing UI
 	private static final int FONT_SIZE = 25;
 	private static final int OPTION_FONT_SIZE = 10;
 	private static final int FRAME_FACTOR = 50;
+	private static final int BOLD_BORDER_SIZE = 3;
+	private static final int REG_BORDER_SIZE = 1;
+	
 	
 	
 	public SudokuUI() {
@@ -39,18 +44,10 @@ public class SudokuUI extends JFrame {
 			board = SudokuBoardReader.readBoardGridFormat(boardFile);
 			Solver pruneSolver = new PruneSolver();
 			Solver freqSolver = new FrequencySolver();
-			BasicBoardCheck checker = new BasicBoardCheck();
+			BoardChecker checker = new BoardChecker();
 			
-			board.print();
-			System.out.println("After:");
-			AbstractSolver.populateOptions(board);
-			freqSolver.solveBoard(board);
-			//pruneSolver.solveBoard(board);
-			board.print();
-			
-			System.out.println("BoardCheck returns: " + checker.checkBoard(board) );
 			boolean hadEffect = false;
-			/*
+			
 			do {
 				boolean pruneOutput = pruneSolver.solveBoard(board);
 				System.out.println("PruneSolver returning: " + pruneOutput);
@@ -58,7 +55,7 @@ public class SudokuUI extends JFrame {
 				System.out.println("FrequencySolver returning: " + freqOutput);
 				hadEffect = pruneOutput || freqOutput;
 			} while( hadEffect );
-			*/
+			
 			
 		} catch ( IOException e ) {
 			System.out.println(e.getMessage());
@@ -80,7 +77,7 @@ public class SudokuUI extends JFrame {
 		
 		for( int i = 0; i < boardSize; i++) {
 			for( int j = 0; j < boardSize; j++ ) {
-				JPanel cellPanel = createCellPanel();
+				JPanel cellPanel = createCellPanel(i, j);
 				boardPanel.add(cellPanel);
 				cellPanels[i][j] = cellPanel;
 			}	
@@ -92,7 +89,7 @@ public class SudokuUI extends JFrame {
 		updateBoard();
 	}
 	
-	private JPanel createCellPanel() {
+	private JPanel createCellPanel(int row, int col) {
 		//initialize panels, doing card layout to swap between cards
 		JPanel cellPanel = new JPanel();
 		JPanel optionPanel = new JPanel();
@@ -130,7 +127,12 @@ public class SudokuUI extends JFrame {
 		cellPanel.putClientProperty("valueLabel", valueLabel);
 		cellPanel.putClientProperty("cardLayout", cardLayout);
 		
-		cellPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		int top = (row % sqrt == 0 ) ? BOLD_BORDER_SIZE : REG_BORDER_SIZE;
+		int left = (col % sqrt == 0 ) ? BOLD_BORDER_SIZE : REG_BORDER_SIZE;
+		int bottom = (row == this.boardSize - 1) ? BOLD_BORDER_SIZE : REG_BORDER_SIZE;
+		int right = (col == this.boardSize - 1) ? BOLD_BORDER_SIZE : REG_BORDER_SIZE;
+		
+		cellPanel.setBorder(BorderFactory.createMatteBorder(top, left, bottom, right, Color.BLACK));
 		
 		return cellPanel;
 	}
