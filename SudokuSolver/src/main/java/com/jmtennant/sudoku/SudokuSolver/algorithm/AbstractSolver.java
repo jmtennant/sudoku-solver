@@ -10,7 +10,7 @@ import java.util.List;
 import com.jmtennant.sudoku.SudokuSolver.core.Board;
 import com.jmtennant.sudoku.SudokuSolver.core.Cell;
 
-
+ 
 
 /**
  * Abstract Class to hold helper methods that would be useful regardless of the exact solving algorithm
