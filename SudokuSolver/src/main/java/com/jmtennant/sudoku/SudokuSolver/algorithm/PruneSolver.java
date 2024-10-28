@@ -1,10 +1,13 @@
 package com.jmtennant.sudoku.SudokuSolver.algorithm;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import com.jmtennant.sudoku.SudokuSolver.core.Board;
 import com.jmtennant.sudoku.SudokuSolver.core.Cell;
 
-import edu.ncsu.csc316.dsa.queue.ArrayBasedQueue;
-import edu.ncsu.csc316.dsa.queue.Queue;
+//import edu.ncsu.csc316.dsa.queue.ArrayBasedQueue;
+//import edu.ncsu.csc316.dsa.queue.Queue;
 
 /**
  * <p>
@@ -21,7 +24,7 @@ public class PruneSolver extends AbstractSolver {
 	public boolean solveBoard(Board board) {
 		boolean hasEffect = false;
 		int n = board.size();
-		Queue<Cell> cellQueue = new ArrayBasedQueue<Cell>();
+		Queue<Cell> cellQueue = new LinkedList<Cell>();
 		
 		populateOptions(board);
 		
@@ -30,7 +33,7 @@ public class PruneSolver extends AbstractSolver {
 			for( int j = 0; j < n; j++ ) {
 				//System.out.println("Checking cell (" + i + ", " + j + "), numOptions = " + board.getCell(i, j).numOptions() );
 				if(board.getCell(i, j).numOptions() == 1) {
-					cellQueue.enqueue(board.getCell(i, j));
+					cellQueue.add(board.getCell(i, j));
 					//System.out.println("Enqueueing cell: (" + i + ", " + j + ")");
 				}
 			}
@@ -39,7 +42,7 @@ public class PruneSolver extends AbstractSolver {
 		//We fill in the element with that option, and then update all of the cells that could be affected
 		//and add any new one-option cells to the queue
 		while( !cellQueue.isEmpty() ) {
-			Cell cell = cellQueue.dequeue();
+			Cell cell = cellQueue.poll();
 			board.setCellValue(cell.getRow(), 
 					           cell.getCol(), 
 					           cell.getOptions().getFirst());
@@ -58,7 +61,7 @@ public class PruneSolver extends AbstractSolver {
 							             getCellOptions(candidate, board));
 				}
 				if( candidate.numOptions() == 1 ) {
-					cellQueue.enqueue(candidate);
+					cellQueue.add(candidate);
 				}
 				
 				//now do it for columns
@@ -69,7 +72,7 @@ public class PruneSolver extends AbstractSolver {
 							             getCellOptions(candidate, board));
 				}
 				if( candidate.numOptions() == 1 ) {
-					cellQueue.enqueue(candidate);
+					cellQueue.add(candidate);
 				}
 				
 				//now do it for block
@@ -80,7 +83,7 @@ public class PruneSolver extends AbstractSolver {
 							             getCellOptions(candidate, board));
 				}
 				if( candidate.numOptions() == 1 ) {
-					cellQueue.enqueue(candidate);
+					cellQueue.add(candidate);
 				}
 			}
 		}

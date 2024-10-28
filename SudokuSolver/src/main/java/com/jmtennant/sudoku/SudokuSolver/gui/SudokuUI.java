@@ -47,7 +47,7 @@ public class SudokuUI extends JFrame {
 			BoardChecker checker = new BoardChecker();
 			
 			boolean hadEffect = false;
-			
+			AbstractSolver.populateOptions(board);
 			do {
 				boolean pruneOutput = pruneSolver.solveBoard(board);
 				System.out.println("PruneSolver returning: " + pruneOutput);
